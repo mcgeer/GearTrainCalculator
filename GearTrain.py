@@ -20,7 +20,29 @@ def factor(a):
 
 def test(list1,list2,max_ratio):
     #Should test if 2 equal length factA, factB can be rearranged
-    pass
+    #_________________________________________________________
+
+
+
+
+
+
+    #_________________________________________________________
+    raise NotImplemented
+
+def fix(list1,list2,max_ratio):
+    #Should resize list1 by multiplying elements to be the same length as list2
+    #Calls test for every potential resize, returns first that works
+    #_________________________________________________________
+
+
+
+
+
+
+
+    #_________________________________________________________
+    raise NotImplemented
 
 def gearTrain(input_speed, output_speed, min_gear, max_gear, max_ratio):
     R = input_speed / float(output_speed)
@@ -48,18 +70,20 @@ def gearTrain(input_speed, output_speed, min_gear, max_gear, max_ratio):
     for solution in allValid:
         if len(solution[0]) == len(solution[1]):
             #The lists are already equal size, test them once
-           pass
+           if test(solution[0],solution[1],max_ratio):
+               return solution
         else:
             #The lists are different sizes, fix
             shorter,longer = sorted(solution,key=lambda x: len(x))
-            reciprocal = False
+            target_ratio = max_ratio
             if longer == solution[0]:
-                reciprocal = True
+                target_ratio = 1./max_ratio
 
             #Make them the same size by mulpying the elements of the longer list together, testing each time
+            return fix(longer,shorter,target_ratio)
 
-        #If the test returns true for either case...
-        print BY JOVE WE HAVE DONE IT.
+        
+    return "No solution!"
 
 gearTrain(28,1,0,20,2)
             
