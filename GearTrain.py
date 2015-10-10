@@ -16,6 +16,8 @@ def GearTrainCalculator(Input_speed, Output_speed, min_gear, max_gear, max_ratio
                     gear_ratio = size_2/size
                     if gear_ratio <= max_ratio:
                         #Code for Gear concatenation
+                        if Input_speed * gear_ratio > Output_speed:
+                            break
                         Input_speed *= gear_ratio
                         Gear_Train.append([size, size_2])
                         Gear_Pair_Found = True
