@@ -29,20 +29,63 @@ def test(list1,list2,max_ratio):
 
     #_________________________________________________________
     raise NotImplemented
-
-def fix(list1,list2,max_ratio):
+#@param: numerator   = a list of factored elements or possible gear teeth numbers
+#@param: denominator = a list of factored elements or possible gear teeth numbers
+#@param: max_gear    = the max size of a gear
+#@param: max_ratio   = the max ratio of gear sizes
+def fix(numerator, denominator, max_gear, max_ratio):
     #Should resize list1 by multiplying elements to be the same length as list2
     #Calls test for every potential resize, returns first that works
     #_________________________________________________________
-
-
-
-
-
-
+    
+    #Hold elements of num and denum
+    #print numerator, " ", denominator, " ", max_gear, " ", max_ratio
+    shortest = []; longest = []; placehold =[]
+    
+    if(len(numerator) <= len(denominator)):
+        shortest = numerator
+        longest = denominator
+    else:
+        shortest = denominator
+        longest = numerator
+    print longest
+    placehold = longest[:]                                          #This variable holds the longest incase the first attempt does not work
+    for major_pivot in range(len(shortest) - 1):                        #loop through rotation values for the shortest list
+        for pivot in range(len(longest) - 1):                           #loop through rotation values for largest list
+            for over in range(len(shortest), len(longest)):         #loop through entries that are above shortest list
+                multipliedIn = False
+                for i in range(len(shortest)):                      #Loop through indicies to multiply too
+                    if not (1.0/max_ratio >= shortest[i] / float(longest[i]) >= max_ratio):
+                        break   #Values already do not work together thus break
+                    temp = longest[i] * longest[over]
+                    #HERE FIX HERE
+                    if (temp <= max_gear and 1.0/max_ratio >= shortest[i] / float(temp) >= max_ratio):
+                        print "IN"
+                        #This means it worked I can mult in!
+                        multipliedIn = True
+                        longest[i] = temp
+                        break #go to next overflow value
+                if not multipliedIn:
+                    #break to rearrange through rotation
+                    break
+                if(over == len(longest)-1):
+                    longest = longest[0:len(shortest)]
+                    if(len(numerator) == len(shortest)):
+                        return True, shortest, longest
+                    else:
+                        return True, longest, shortest
+            #This rotates the values
+            print placehold
+            print longest
+            placehold.append(placehold.pop(0))
+            longest = placehold[:]
+            print longest
+        shortest = shortest.append(shortest.pop(0))
+              
+        
 
     #_________________________________________________________
-    raise NotImplemented
+    return False, numerator, denominator
 
 def gearTrain(input_speed, output_speed, min_gear, max_gear, max_ratio):
     R = input_speed / float(output_speed)
@@ -65,6 +108,9 @@ def gearTrain(input_speed, output_speed, min_gear, max_gear, max_ratio):
                 break
         if validB and round(R*B) == R*B:
             allValid.append([factor(R*B),fB])
+
+
+    print allValid
     
     #Figure out which list is bigger
     for solution in allValid:
@@ -78,14 +124,16 @@ def gearTrain(input_speed, output_speed, min_gear, max_gear, max_ratio):
             target_ratio = max_ratio
             if longer == solution[0]:
                 target_ratio = 1./max_ratio
-
+            print target_ratio, ", ", max_ratio
             #Make them the same size by mulpying the elements of the longer list together, testing each time
-            return fix(longer,shorter,target_ratio)
-
+            retval = fix(solution[0],solution[1],max_gear, target_ratio)
+            if(retval[0] == True):
+                print retval
+                break
         
     return "No solution!"
 
-gearTrain(28,1,0,20,2)
+gearTrain(28,1,0,20,5)
             
 
 
