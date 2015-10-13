@@ -107,6 +107,18 @@ def shiftMin(listOfNumbers,min_num,constant):
         while i*constant < min_num:
             constant+=1
     return constant
+
+def compact(newSolution,max_gear,max_ratio):
+    length = len(newSolution)
+    for a in range(length):
+        for b in range(length):
+            if b != a:
+                testSolution = [newSolution[a][0]*newSolution[b][0],newSolution[a][1]*newSolution[b][1]]
+                if testSolution[0] <= max_gear and testSolution[1] <= max_gear and testSolution[0]/float(testSolution[1]) <= max_ratio:
+                    newSolution[a] = testSolution
+                    newSolution = newSolution[:b]+newSolution[b+1:]
+                    return True,newSolution
+    return False,newSolution
         
 def gearTrain(input_speed, output_speed, min_gear, max_gear, max_ratio):
     print
@@ -175,6 +187,11 @@ def gearTrain(input_speed, output_speed, min_gear, max_gear, max_ratio):
             if not(worked): continue
             newSolution = pair(solution[0],solution[1],max_ratio)[1]
 
+        #Try compacting gears
+        couldCompact = True
+        while couldCompact:
+            couldCompact,newSolution = compact(newSolution,max_gear,max_ratio)
+                
         #We now need to shift any gears that are too small by multiplying their pair
         valid = True
         for i in newSolution:
