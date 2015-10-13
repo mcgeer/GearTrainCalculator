@@ -177,7 +177,6 @@ def gearTrain(input_speed, output_speed, min_gear, max_gear, max_ratio):
 
         #We now need to shift any gears that are too small by multiplying their pair
         valid = True
-        print newSolution
         for i in newSolution:
             constant = 1
             while i[0]*constant < min_gear or i[1]*constant < min_gear:
@@ -202,5 +201,6 @@ def gearTrain(input_speed, output_speed, min_gear, max_gear, max_ratio):
         print "No more solutions!"
 
 if __name__ == "__main__":niceInput()
+#gearTrain(500000,100,5,25,5)
             
 
