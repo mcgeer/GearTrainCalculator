@@ -94,11 +94,11 @@ def niceDisplay(gearTrain,input_speed,output_speed):
 
 def niceInput():
     '''Nicely get user input.'''
-    a = int(raw_input("Input rotation speed:"))
-    b = int(raw_input("Output rotation speed:"))
+    a = float(raw_input("Input rotation speed:"))
+    b = float(raw_input("Output rotation speed:"))
     c = int(raw_input("Minimum teeth on gear:"))
     d = int(raw_input("Maximum teeth on gear:"))
-    e = int(raw_input("Maximum gear ratio:"))
+    e = float(raw_input("Maximum gear ratio:"))
     gearTrain(a,b,c,d,e)
 
 def shiftMin(listOfNumbers,min_num,constant):
