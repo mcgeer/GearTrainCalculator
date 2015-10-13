@@ -18,7 +18,7 @@ def factor(integer):
             break
     return factors
 
-def test(list1,list2,max_ratio,prev=[]):
+def pair(list1,list2,max_ratio,prev=[]):
     #Tests if 2 equal length list1, list2 can be rearranged
     #such that each element A of list1 (a) can be paired to a list2 element B
     #so A/B < max_ratio.
@@ -30,9 +30,9 @@ def test(list1,list2,max_ratio,prev=[]):
             if list1[a]/float(list2[b]) <= max_ratio:
                 if list1[a] == list2[b]:
                     #Don't bother with 1:1 gears
-                    res = test(list1[:a]+list1[a+1:],list2[:b]+list2[b+1:],max_ratio,prev)
+                    res = pair(list1[:a]+list1[a+1:],list2[:b]+list2[b+1:],max_ratio,prev)
                 else:
-                    res = test(list1[:a]+list1[a+1:],list2[:b]+list2[b+1:],max_ratio,prev+[[list1[a],list2[b]]])
+                    res = pair(list1[:a]+list1[a+1:],list2[:b]+list2[b+1:],max_ratio,prev+[[list1[a],list2[b]]])
                 if res[0]:
                     return res
     return False,[]
@@ -61,7 +61,7 @@ def fix(list1,list2,max_ratio,max_gear):
     if diff == 0:
         return list1,list2,True
 
-    if test(list1,list2+[1]*diff,max_ratio): #Try adding a 1
+    if pair(list1,list2+[1]*diff,max_ratio): #Try adding a 1
         return list1,list2+[1]*diff,True
 
     #Get minimum of list1
@@ -73,7 +73,7 @@ def fix(list1,list2,max_ratio,max_gear):
             list1 = list(originalList1[1:]) #Reset list1
             list1.remove(a)
             list1.append(a*minLong)
-            if test(list1,list2,max_ratio)[0]:
+            if pair(list1,list2,max_ratio)[0]:
                 return fix(list1,list2,max_ratio,max_gear) #Recursive call       
     return originalList1,list2,False #Failed
 
@@ -161,7 +161,7 @@ def gearTrain(input_speed, output_speed, min_gear, max_gear, max_ratio):
         #Figure out which list is bigger
         if len(solution[0]) == len(solution[1]):
             #The lists are already equal size, test them once
-            res = test(solution[0],solution[1],max_ratio)
+            res = pair(solution[0],solution[1],max_ratio)
             if res[0]:
                 newSolution = res[1]
             
@@ -169,13 +169,13 @@ def gearTrain(input_speed, output_speed, min_gear, max_gear, max_ratio):
             #The lists are different sizes, fix
             solution[0],solution[1],worked = fix(solution[0],solution[1],max_ratio,max_gear)
             if not(worked): continue
-            newSolution = test(solution[0],solution[1],max_ratio)[1]
+            newSolution = pair(solution[0],solution[1],max_ratio)[1]
 
         else:
             #Reciprocal max_ratio because denominator is longer
             solution[1],solution[0],worked = fix(sorted(solution[1]),solution[0],1./max_ratio,max_gear)               
             if not(worked): continue
-            newSolution = test(solution[0],solution[1],max_ratio)[1]
+            newSolution = pair(solution[0],solution[1],max_ratio)[1]
 
         #We now need to shift any gears that are too small by multiplying their pair
         for i in newSolution:
