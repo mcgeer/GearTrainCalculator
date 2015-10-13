@@ -201,7 +201,6 @@ def gearTrain(input_speed, output_speed, min_gear, max_gear, max_ratio):
     else:
         print "No more solutions!"
 
-#if __name__ == "__main__":niceInput()
-gearTrain(500000,100,5,25,5)
+if __name__ == "__main__":niceInput()
             
 
