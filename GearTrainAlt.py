@@ -151,13 +151,11 @@ def gearTrain(input_speed, output_speed, min_gear, max_gear, max_ratio):
                 break
         if not(validDenominator):continue
 
-
         allValid.append([factors2,factors])
 
     #Now test all the solutions and modify them as needed
     allSolutions = []
     for solution in allValid:
-        
         #Figure out which list is bigger
         if len(solution[0]) == len(solution[1]):
             #The lists are already equal size, test them once
@@ -178,12 +176,18 @@ def gearTrain(input_speed, output_speed, min_gear, max_gear, max_ratio):
             newSolution = pair(solution[0],solution[1],max_ratio)[1]
 
         #We now need to shift any gears that are too small by multiplying their pair
+        valid = True
+        print newSolution
         for i in newSolution:
             constant = 1
-            while i[0] < min_gear or i[1] < min_gear:
+            while i[0]*constant < min_gear or i[1]*constant < min_gear:
                 constant+=1
-                i[0]*=constant
-                i[1]*=constant
+            i[0]*=constant
+            i[1]*=constant
+            if i[0] > max_gear or i[1] > max_gear:
+                valid = False
+                break
+        if not(valid): continue               
 
         if not(self_check(newSolution,input_speed,output_speed)): #Do a self check
             continue
@@ -196,7 +200,8 @@ def gearTrain(input_speed, output_speed, min_gear, max_gear, max_ratio):
         print "No solution!"
     else:
         print "No more solutions!"
-if __name__ == "__main__":
-    niceInput()
+
+#if __name__ == "__main__":niceInput()
+gearTrain(500000,100,5,25,5)
             
 
