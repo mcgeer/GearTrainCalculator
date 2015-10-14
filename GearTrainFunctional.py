@@ -19,9 +19,7 @@ def factor(integer):
     return factors
 
 def pair(list1,list2,max_ratio,prev=[]):
-    #Tests if 2 equal length list1, list2 can be rearranged
-    #such that each element A of list1 (a) can be paired to a list2 element B
-    #so A/B < max_ratio.
+    '''Pairs each element A of list1 to an element B of list2 such that A/B <= max_ratio.'''
     if len(list1) == 0:
         return True,prev
 
@@ -38,7 +36,7 @@ def pair(list1,list2,max_ratio,prev=[]):
     return False,[]
 
 def self_check(solution,input_speed,output_speed):
-    #Do a final self check on any given solution via simulation
+    '''Simulates a gear train and returns True if the output is the same as expected.'''
     speed = input_speed
     n = 0
     while n < len(solution):
@@ -49,10 +47,8 @@ def self_check(solution,input_speed,output_speed):
     return False
 
 def fix(list1,list2,max_ratio,max_gear):
-    #Should resize list1 by multiplying elements to be the same length
-    #list1 is the longer list.
-    #Calls test for every potential resize, returns first that works
-    #Also returns a boolean that determines success of the algorithm.
+    '''Multiplies elements of list1 together until it is the same length as list2.
+        Returns the 2 equal-sized lists and a boolean representing success of the algorithm.'''
     originalList1 = list(list1)
     targetLength = len(list2)
 
@@ -109,6 +105,7 @@ def shiftMin(listOfNumbers,min_num,constant):
     return constant
 
 def compact(newSolution,max_gear,max_ratio):
+    '''Compact a gear train by merging gear pairs.'''
     length = len(newSolution)
     for a in range(length):
         for b in range(length):
