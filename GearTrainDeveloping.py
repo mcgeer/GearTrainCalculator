@@ -48,19 +48,16 @@ def fix(numerator, denominator, max_gear, max_ratio):
     else:
         shortest = denominator
         longest = numerator
-    print longest
     placehold = longest[:]                                          #This variable holds the longest incase the first attempt does not work
-    for major_pivot in range(len(shortest) - 1):                        #loop through rotation values for the shortest list
-        for pivot in range(len(longest) - 1):                           #loop through rotation values for largest list
+    for major_pivot in range(len(shortest) ):                        #loop through rotation values for the shortest list
+        for pivot in range(len(longest)):                           #loop through rotation values for largest list
             for over in range(len(shortest), len(longest)):         #loop through entries that are above shortest list
                 multipliedIn = False
                 for i in range(len(shortest)):                      #Loop through indicies to multiply too
                     if not (1.0/max_ratio >= shortest[i] / float(longest[i]) >= max_ratio):
                         break   #Values already do not work together thus break
                     temp = longest[i] * longest[over]
-                    #HERE FIX HERE
-                    if (temp <= max_gear and 1.0/max_ratio >= shortest[i] / float(temp) >= max_ratio):
-                        print "IN"
+                    if (temp <= max_gear and 1.0/max_ratio >= shortest[i] / float(temp) >= max_ratio and shortest[i]/ float(temp) != 1):
                         #This means it worked I can mult in!
                         multipliedIn = True
                         longest[i] = temp
@@ -75,12 +72,9 @@ def fix(numerator, denominator, max_gear, max_ratio):
                     else:
                         return True, longest, shortest
             #This rotates the values
-            print placehold
-            print longest
             placehold.append(placehold.pop(0))
             longest = placehold[:]
-            print longest
-        shortest = shortest.append(shortest.pop(0))
+        shortest.append(shortest.pop(0))
               
         
 
@@ -98,7 +92,7 @@ def gearTrain(input_speed, output_speed, min_gear, max_gear, max_ratio):
 
     B = 0
     allValid = []
-    while B<500:
+    while B<500000:
         B+=1
         validB = True
         fB = factor(B)
@@ -109,9 +103,7 @@ def gearTrain(input_speed, output_speed, min_gear, max_gear, max_ratio):
         if validB and round(R*B) == R*B:
             allValid.append([factor(R*B),fB])
 
-
-    print allValid
-    
+    solFound = False    
     #Figure out which list is bigger
     for solution in allValid:
         if len(solution[0]) == len(solution[1]):
@@ -124,16 +116,24 @@ def gearTrain(input_speed, output_speed, min_gear, max_gear, max_ratio):
             target_ratio = max_ratio
             if longer == solution[0]:
                 target_ratio = 1./max_ratio
-            print target_ratio, ", ", max_ratio
             #Make them the same size by mulpying the elements of the longer list together, testing each time
             retval = fix(solution[0],solution[1],max_gear, target_ratio)
             if(retval[0] == True):
+                solFound = True
                 print retval
-                break
-        
-    return "No solution!"
+                print solution
+                raw_input("\n\n\nPRESS ENTER FOR MORE SOLUTIONS>>>")
+                
+    if not solFound:
+        print"No  solution!"
+    else:
+        print "No more solutions found"
 
-gearTrain(28,1,0,20,5)
+    testDenominator = 0
+    allValid = []
+
+
+gearTrain(100000,100,5,25,5)
             
 
 
