@@ -22,7 +22,7 @@ public abstract class GearTrainElement {
 	}
 	
 	private double length, width, height;
-	private String dimension_units, speed_units;
+	private String unit_size, unit_speed;
 	private GEAR_ALLIGNMENT allignment;
 
 	public void setDimensions(double length, double width, double height) {
@@ -32,11 +32,11 @@ public abstract class GearTrainElement {
 	}
 
 	public void setDimensionUnits(String units) {
-		this.dimension_units = units;
+		this.unit_size = units;
 	}
 
 	public void setSpeedUnits(String units) {
-		this.speed_units = units;
+		this.unit_speed = units;
 	}
 
 	public double getLength() {
@@ -52,11 +52,11 @@ public abstract class GearTrainElement {
 	}
 
 	public String getDimensionUnits() {
-		return this.dimension_units;
+		return this.unit_size;
 	}
 
 	public String getSpeedUnits() {
-		return this.speed_units;
+		return this.unit_speed;
 	}
 
 

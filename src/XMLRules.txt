@@ -1,0 +1,12 @@
+1-Line one begins with <?xml version="1.0"?>
+
+2-The first tag specifies a gear train with set attributes
+	<GearTrain attribute="value" attribute1="value1" ...>
+	attributes can be:
+	String name:		: name of the gearTrain
+	String unit_speed 	: specifies units to use in current train, RPM or RPS
+	String unit_size 	: specifies units to use on measurements, mm, in, m, cm, ft
+	double input_speed	: input speed in unit_speed units
+	double length, width, and height	: Specify dimensions for the gear Train, default is unbounded all = Infinity
+
+3-Subsequent child tags are represented by GearTrainElements, <SpurGear/>, <WormGear/>, <Worm/>
