@@ -49,8 +49,6 @@ public enum FieldInformationValues {
 	
 	@SuppressWarnings("unchecked")
 	public <T extends Object> T cast(String value){
-		if(this.equals(ALIGNMENT))
-			System.out.println("AL");
 		return (T) castFunction.apply(value);
 	}
 }

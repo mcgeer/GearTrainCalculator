@@ -30,15 +30,12 @@ public class SpurGear extends GearTrainElement{
 	}
 
 	public SpurGear(NamedNodeMap map) {
-		this();
+		super(map);
 		this.newInstance(this.getClass(), map);
 	}
 
-	public SpurGear() {
-		super();
-		//TODO finish
-	}
-
+	
+	
 	public double getModulus() {
 		return modulus;
 	}

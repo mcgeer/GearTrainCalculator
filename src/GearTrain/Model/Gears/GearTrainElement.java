@@ -1,5 +1,7 @@
 package GearTrain.Model.Gears;
 
+import org.w3c.dom.NamedNodeMap;
+
 import GearTrain.Exceptions.GearTrainNonMeshableElements;
 import GearTrain.Model.GearAlignment;
 import GearTrain.Model.NewInstance;
@@ -26,6 +28,21 @@ public abstract class GearTrainElement extends NewInstance{
 	private double length, width, height;
 	private String unit_size, unit_speed;
 	private GearAlignment alignment;
+
+	
+	public GearTrainElement(){
+		
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void InitGearTrainElement(NamedNodeMap map, Class<? extends NewInstance> c) {
+		this.newInstance((Class<? extends NewInstance>)c.getSuperclass(), map);
+	}
+
+	@SuppressWarnings("unchecked")
+	public GearTrainElement(NamedNodeMap map) {
+		this.newInstance((Class<? extends NewInstance>)this.getClass().getSuperclass(), map);
+	}
 
 	public void setDimensions(double length, double width, double height) {
 		this.length = length;

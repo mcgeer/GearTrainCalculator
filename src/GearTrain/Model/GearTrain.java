@@ -69,11 +69,11 @@ public class GearTrain extends NewInstance {
 			ratio *= g.getRatio(p);
 			p = g;
 		}
+		System.out.println(ratio);
 		return ratio * getInputSpeed();
 	}
 	
 	public boolean checkIsInBounds(){
-		//TODO code to check GearBox bounds
 		return true;
 	}
 	

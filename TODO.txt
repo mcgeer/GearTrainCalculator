@@ -1,1 +1,6 @@
-Enums that should have own file, Alignment 
+-Set all default constructors
+-JavaDocs Functions
+-Worm and Worm Gear
+	-Modify FieldInformation as well as GearTrainElementTags
+-UI, set up UI to allow for New GearTrain as well as load Old (XML)
+	-Implement save
