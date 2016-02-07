@@ -1,8 +1,10 @@
+package GearTrain.Model.Gears;
 
-public abstract class GearTrainElement {
-	public enum GEAR_ALLIGNMENT {
-		AXIAL, PLANAR
-	};
+import GearTrain.Exceptions.GearTrainNonMeshableElements;
+import GearTrain.Model.GearAlignment;
+import GearTrain.Model.NewInstance;
+
+public abstract class GearTrainElement extends NewInstance{
 	
 	public enum GEAR_DIRECTION {
 		CC(1), CCW(-1);
@@ -23,7 +25,7 @@ public abstract class GearTrainElement {
 	
 	private double length, width, height;
 	private String unit_size, unit_speed;
-	private GEAR_ALLIGNMENT allignment;
+	private GearAlignment alignment;
 
 	public void setDimensions(double length, double width, double height) {
 		this.length = length;
@@ -62,11 +64,13 @@ public abstract class GearTrainElement {
 
 	//public abstract <T extends GearTrainElement> double getOutputSpeed(T previous);
 
-	public GEAR_ALLIGNMENT getAllignment() {
-		return allignment;
+	public GearAlignment getAllignment() {
+		return alignment;
 	}
 
-	public void setAllignment(GEAR_ALLIGNMENT allignment) {
-		this.allignment = allignment;
+	public void setAllignment(GearAlignment allignment) {
+		this.alignment = allignment;
 	}
+
+	public abstract double getRatio(GearTrainElement previous) throws GearTrainNonMeshableElements;
 }
