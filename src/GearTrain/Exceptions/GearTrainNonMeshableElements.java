@@ -1,5 +1,11 @@
 package GearTrain.Exceptions;
 
+/**
+ * GearTrainNonMeshableElements Exception is thrown when two elements in a gear train
+ * 		Cannot be planar defined to one another
+ * @author riley_000
+ *
+ */
 public class GearTrainNonMeshableElements extends Exception{
 	
 	private static final long serialVersionUID = -5712759644856348212L;

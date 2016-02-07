@@ -1,26 +1,6 @@
 package GearTrain.Model;
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 import GearTrain.Exceptions.GearTrainNonMeshableElements;
 import GearTrain.Model.Gears.GearTrainElement;
@@ -30,7 +10,7 @@ import GearTrain.Model.Gears.GearTrainElement;
 public class GearTrain extends NewInstance {
 	private List<GearTrainElement> gear_train = new ArrayList<>();
 	private double input_speed = 0;
-	private double height, length, width;
+	private double height, length, width, min_gear_size, max_gear_size;
 	private String unit_size, unit_speed, name;
 	
 	/**
@@ -38,9 +18,12 @@ public class GearTrain extends NewInstance {
 	 * 		The NewInstance Method is called immediately
 	 */
 	public GearTrain() {
+		//No restrictions on sizes other than positive entries
 		setGearBoxHeight(Double.POSITIVE_INFINITY);
 		setGearBoxLength(Double.POSITIVE_INFINITY);
 		setGearBoxWidth(Double.POSITIVE_INFINITY);
+		setMinGearSize(0.0);
+		setMaxGearSize(Double.POSITIVE_INFINITY);
 		setInputSpeed(1.0);
 		setName("GearTrain");
 		setUnitSize("mm");
@@ -69,11 +52,16 @@ public class GearTrain extends NewInstance {
 			ratio *= g.getRatio(p);
 			p = g;
 		}
-		System.out.println(ratio);
 		return ratio * getInputSpeed();
 	}
 	
 	public boolean checkIsInBounds(){
+		//TODO generate Bounds checking via optimizations
+		return true;
+	}
+	
+	public boolean isValidGearTrain(){
+		//TODO generate Train validation based on bound checks, meshing gears, gear sizes
 		return true;
 	}
 	
@@ -133,6 +121,22 @@ public class GearTrain extends NewInstance {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public double getMin_gear_size() {
+		return min_gear_size;
+	}
+
+	public void setMinGearSize(double min_gear_size) {
+		this.min_gear_size = min_gear_size;
+	}
+
+	public double getMaxGearSize() {
+		return max_gear_size;
+	}
+
+	public void setMaxGearSize(double max_gear_size) {
+		this.max_gear_size = max_gear_size;
 	}
 
 }

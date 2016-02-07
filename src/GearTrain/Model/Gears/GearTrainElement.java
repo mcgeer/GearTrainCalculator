@@ -8,39 +8,28 @@ import GearTrain.Model.NewInstance;
 
 public abstract class GearTrainElement extends NewInstance{
 	
-	public enum GEAR_DIRECTION {
-		CC(1), CCW(-1);
-		private int value;
-		 
-		private GEAR_DIRECTION(int value) {
-			this.setValue(value);
-		}
-
-		public int getValue() {
-			return value;
-		}
-
-		public void setValue(int value) {
-			this.value = value;
-		}
-	}
-	
 	private double length, width, height;
 	private String unit_size, unit_speed;
 	private GearAlignment alignment;
-
 	
+	/**
+	 * General Constructor for GearTrainElement, used to set up base values
+	 */
 	public GearTrainElement(){
-		
-	}
-	
-	@SuppressWarnings("unchecked")
-	public void InitGearTrainElement(NamedNodeMap map, Class<? extends NewInstance> c) {
-		this.newInstance((Class<? extends NewInstance>)c.getSuperclass(), map);
+		//Arbitrary, Gears override these
+		this.setDimensions(10, 1, 10);
+		this.setSpeedUnits("RPM");
+		this.setDimensionUnits("mm");
+		this.setAllignment(GearAlignment.AXIAL);
 	}
 
+	/**
+	 * Constructs a GearTrainElement from its sub class, using parsed XML file data
+	 * @param map is attribute data for a given gear train element
+	 */
 	@SuppressWarnings("unchecked")
 	public GearTrainElement(NamedNodeMap map) {
+		this();
 		this.newInstance((Class<? extends NewInstance>)this.getClass().getSuperclass(), map);
 	}
 
@@ -78,9 +67,6 @@ public abstract class GearTrainElement extends NewInstance{
 		return this.unit_speed;
 	}
 
-
-	//public abstract <T extends GearTrainElement> double getOutputSpeed(T previous);
-
 	public GearAlignment getAllignment() {
 		return alignment;
 	}
@@ -88,6 +74,13 @@ public abstract class GearTrainElement extends NewInstance{
 	public void setAllignment(GearAlignment allignment) {
 		this.alignment = allignment;
 	}
-
+	
+	/**
+	 * Allows for the integration of new gear elements to be implemented into output calculations
+	 * @param previous element that meshes to this
+	 * @return ratio multiplier between this and previous
+	 * @throws GearTrainNonMeshableElements when gear elements are non compatible in planar formation
+	 * 				or modulus/other meshing factors are inconsistent 
+	 */
 	public abstract double getRatio(GearTrainElement previous) throws GearTrainNonMeshableElements;
 }

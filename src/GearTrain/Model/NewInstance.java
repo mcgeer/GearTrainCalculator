@@ -1,6 +1,5 @@
 package GearTrain.Model;
 import java.lang.reflect.Field;
-import java.util.Arrays;
 
 import org.w3c.dom.NamedNodeMap;
 
@@ -24,9 +23,7 @@ public abstract class NewInstance{
 					//Match Types
 					f.set(this, pair.cast(map.getNamedItem(pair.getKey()).getNodeValue()));
 				}
-			}catch (NoSuchFieldException e){
-				
-			}catch( SecurityException | IllegalArgumentException | IllegalAccessException e) {
+			}catch( NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
 				e.printStackTrace();
 			}
 		}

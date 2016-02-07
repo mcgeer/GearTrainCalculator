@@ -2,14 +2,12 @@ package GearTrain.Model.Parser;
 import java.io.File;
 import java.io.IOException;
 import java.security.KeyException;
-import java.util.HashMap;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
-import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
@@ -18,7 +16,11 @@ import org.xml.sax.SAXException;
 import GearTrain.Model.GearTrain;
 
 public class XMLParser {
-	
+	/**
+	 * Load a GearTrain from an XML file and return it
+	 * @param input_file is an input file formatted to generate a GearTrain
+	 * @return GearTrain representation of the XML file
+	 */
 	public static GearTrain loadGearTrain(String input_file){
 		GearTrain gt = new GearTrain();
 		try {
@@ -34,7 +36,6 @@ public class XMLParser {
 			
 			for(int i = 0; i < gear_train_elements.getLength(); i++){
 				Node current_node = gear_train_elements.item(i);
-				NamedNodeMap attributes= current_node.getAttributes();
 				if(!(current_node instanceof Text)){
 					try{
 						gt.addGearTrainElement(GearTrainElementTags.createNewInstance(current_node.getNodeName(), current_node.getAttributes()));
