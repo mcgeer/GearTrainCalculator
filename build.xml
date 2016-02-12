@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="GearTrainCalculator">
+<taskdef name="swtjar" classname="org.swtjar.ant.SWTJarTask" classpath="./lib/swtjar.jar"/>
+
+        <!-- Package cross platform SWT Jar -->
+        <swtjar jarfile="./jars/GearTrain.jar" targetmainclass="GearTrain.Application.Application" swtversion="4.4">
+
+                  <!-- Application Classes -->
+                  <fileset dir="./bin/" includes="**/*.class" />
+  
+                  <!-- SWT Jars -->
+                  <fileset dir="./lib" includes="swt-*-4.4.jar" />
+        </swtjar>
+</project>

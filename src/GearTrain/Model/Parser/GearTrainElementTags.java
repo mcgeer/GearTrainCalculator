@@ -4,11 +4,12 @@ import java.util.function.Function;
 import org.w3c.dom.NamedNodeMap;
 
 import GearTrain.Model.NewInstance;
-import GearTrain.Model.Gears.SpurGear;
+import GearTrain.Model.Gears.*;
 
 public enum GearTrainElementTags {
-	SPUR_GEAR("SpurGear", SpurGear::new);
-	
+	SPUR_GEAR("SpurGear", SpurGear::new),
+	WORM_GEAR("WormGear", WormGear::new),
+	WORM("Worm", Worm::new);
 	private String tag;
 	private Function<NamedNodeMap, ? extends NewInstance> createNewInstanceFunction; 
 	

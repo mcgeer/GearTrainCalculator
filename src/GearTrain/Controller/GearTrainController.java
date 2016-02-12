@@ -16,6 +16,7 @@ public class GearTrainController {
 	 */
 	public GearTrainController(View view, String input_file){
 		this.setView(view);
+		view.open();
 		this.setGearTrainModel(XMLParser.loadGearTrain(input_file));
 	}
 
