@@ -8,21 +8,11 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.List;
-import org.eclipse.swt.widgets.ToolBar;
-import org.eclipse.swt.widgets.ToolItem;
-import org.eclipse.swt.custom.CCombo;
-import org.eclipse.swt.custom.CLabel;
 import org.eclipse.swt.widgets.Combo;
 
 public class View {
@@ -43,18 +33,11 @@ public class View {
 	private MenuItem menuHelpItemProgramHelp;
 	private MenuItem menuHelpItemGeneralHelp;
 	
-	//FileBrowser
-	private FileDialog fileBrowser;
+	//Buttons
+	private Button buttonCalculate;
+	private Button buttonCalculateOptimalTrain;
 	
-	
-	//Colors
-	private final Color CUSTOM_BLACK = new Color(display, 0x2C, 0x3E, 0x50);
-	private final Color CUSTOM_PURPLE = new Color(display, 0x9B, 0x59, 0xB6);
-	private final Color CUSTOM_GREEN = new Color(display, 0x2E, 0xCC, 0x71);
-	private final Color CUSTOM_BLUE = new Color(display, 0x34, 0x98, 0xDB);
-	private final Color CUSTOM_ORANGE = new Color(display, 0xE6, 0x7E, 0x22);
-	private final Color CUSTOM_RED= new Color(display, 0xE7, 0x4C, 0x3C);
-	
+	//Text boxes
 	private Text inputSpeedText;
 	private Text boxDimensionXText;
 	private Text outputSpeedText;
@@ -62,6 +45,20 @@ public class View {
 	private Text boxDimensionZText;
 	private Text minGearSizeText;
 	private Text maxGearSizeText;
+	
+	//FileBrowser
+	private FileDialog fileBrowser;
+	
+	//Colors
+	private final Color CUSTOM_BLACK = new Color(display, 0x2C, 0x3E, 0x50);
+	private final Color CUSTOM_WHITE = new Color(display, 0xFA, 0xFA, 0xFF);
+	private final Color CUSTOM_PURPLE = new Color(display, 0x9B, 0x59, 0xB6);
+	private final Color CUSTOM_GREEN = new Color(display, 0x2E, 0xCC, 0x71);
+	private final Color CUSTOM_BLUE = new Color(display, 0x34, 0x98, 0xDB);
+	private final Color CUSTOM_ORANGE = new Color(display, 0xE6, 0x7E, 0x22);
+	private final Color CUSTOM_YELLOW = new Color(display, 0xF1, 0xC4, 0x0F);
+	private final Color CUSTOM_RED= new Color(display, 0xE7, 0x4C, 0x3C);
+	
 	/**
 	 * Open the window.
 	 * @wbp.parser.entryPoint
@@ -77,7 +74,7 @@ public class View {
 	 * Create contents of the window.
 	 */
 	protected void createMainContents() {
-		parentShell = new Shell();
+		parentShell = new Shell(SWT.CLOSE | SWT.TITLE | SWT.MIN);
 		parentShell.setToolTipText("");
 		parentShell.setSize(1080, 720);
 		parentShell.setText("GearTrain");
@@ -134,14 +131,16 @@ public class View {
 		menuHelpItemGeneralHelp.setText("General Help");
 		
 		ScrolledComposite consoleScrolledComposite = new ScrolledComposite(parentShell, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		consoleScrolledComposite.setBounds(25, 474, 1005, 150);
+		consoleScrolledComposite.setBounds(25, 474, 1024, 150);
 		consoleScrolledComposite.setExpandHorizontal(true);
 		consoleScrolledComposite.setExpandVertical(true);
+		consoleScrolledComposite.setBackground(CUSTOM_WHITE);
 		
 		ScrolledComposite gearTrainElementScrolledComposite = new ScrolledComposite(parentShell, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
-		gearTrainElementScrolledComposite.setBounds(391, 53, 639, 415);
+		gearTrainElementScrolledComposite.setBounds(391, 53, 658, 415);
 		gearTrainElementScrolledComposite.setExpandHorizontal(true);
 		gearTrainElementScrolledComposite.setExpandVertical(true);
+		gearTrainElementScrolledComposite.setBackground(CUSTOM_WHITE);
 		
 		Label lblInputSpeed = new Label(parentShell, SWT.NONE);
 		lblInputSpeed.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.NORMAL));
@@ -225,10 +224,10 @@ public class View {
 		
 		Label lblElements = new Label(parentShell, SWT.NONE);
 		lblElements.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.NORMAL));
-		lblElements.setBounds(667, 10, 110, 37);
+		lblElements.setBounds(609, 10, 228, 37);
 		lblElements.setText("Gear Train Elements");
 		lblElements.setBackground(CUSTOM_BLACK);
-		lblElements.setForeground(CUSTOM_PURPLE);
+		lblElements.setForeground(CUSTOM_YELLOW);
 		
 		inputSpeedText = new Text(parentShell, SWT.BORDER);
 		inputSpeedText.setBounds(189, 53, 196, 35);
@@ -251,31 +250,16 @@ public class View {
 		maxGearSizeText = new Text(parentShell, SWT.BORDER);
 		maxGearSizeText.setBounds(189, 297, 196, 35);
 		
-		Button btnCalculate = new Button(parentShell, SWT.NONE);
-		btnCalculate.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-			}
-		});
-		btnCalculate.setBounds(219, 433, 166, 35);
-		btnCalculate.setText("Calculate");
+		buttonCalculate = new Button(parentShell, SWT.NONE);
+		buttonCalculate.setBounds(219, 433, 166, 35);
+		buttonCalculate.setText("Calculate");
 		
-		Button btnCalculateOptimalTrain = new Button(parentShell, SWT.NONE);
-		btnCalculateOptimalTrain.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-			}
-		});
-		btnCalculateOptimalTrain.setBounds(25, 433, 188, 35);
-		btnCalculateOptimalTrain.setText("Calculate Optimal Train");
+		buttonCalculateOptimalTrain = new Button(parentShell, SWT.NONE);
+		buttonCalculateOptimalTrain.setBounds(25, 433, 188, 35);
+		buttonCalculateOptimalTrain.setText("Calculate Optimal Train");
 		
 		Button btnAllowWormDrives = new Button(parentShell, SWT.CHECK);
 		btnAllowWormDrives.setSelection(true);
-		btnAllowWormDrives.addSelectionListener(new SelectionAdapter() {
-			@Override
-			public void widgetSelected(SelectionEvent arg0) {
-			}
-		});
 		btnAllowWormDrives.setBounds(215, 337, 29, 32);
 		btnAllowWormDrives.setText("");
 		btnAllowWormDrives.setBackground(CUSTOM_BLACK);
@@ -290,13 +274,9 @@ public class View {
 		comboDimensionUnits.setItems(new String[] {"mm", "cm", "m", "in", "ft"});
 		comboDimensionUnits.setBounds(289, 94, 94, 33);
 		comboDimensionUnits.select(0);
-		
-		
-		
-
 	}
 
-//======================File Browser========================//
+// ======================File Browser======================== //
 	public String openFileBrowserForOpen() {
 		fileBrowser = new FileDialog(parentShell, SWT.OPEN);
 		fileBrowser.setFilterNames(new String[] { "XML Files", "All Files (*.*)" });
@@ -315,9 +295,12 @@ public class View {
 	}
 	
 //========================GETTERS===========================//
+	
+// =====Getters for objects required outside the scope of this class===== //
 	public Display getDisplay() {
 		return display;
 	}
+	
 
 	public Shell getParentShell() {
 		return parentShell;
@@ -353,5 +336,13 @@ public class View {
 
 	public MenuItem getMenuHelpItemGeneralHelp() {
 		return menuHelpItemGeneralHelp;
+	}
+	
+	public Button getButtonCalculate(){
+		return this.buttonCalculate;
+	}
+	
+	public Button getButtonCalculateOptimalTrain(){
+		return this.buttonCalculateOptimalTrain;
 	}
 }

@@ -4,6 +4,8 @@ import org.eclipse.swt.widgets.Shell;
 import java.lang.reflect.Field;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
@@ -57,6 +59,21 @@ public class GearTrainController {
 
 	// ===============================VIEW=============================== //
 	public void initViewEventHandeling() {
+		//Buttons
+		view.getButtonCalculateOptimalTrain().addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				System.out.println("Event: Button-> Calculate Optimal Gear Train");
+			}
+		});
+		
+		view.getButtonCalculate().addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				System.out.println("Event: Button-> Calculate");
+			}
+		});
+		
 		// Menu -> File
 		view.getMenuFileItemNew().addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
