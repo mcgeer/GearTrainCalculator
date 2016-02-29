@@ -26,11 +26,11 @@ public class Worm extends GearTrainElement{
 	public double getRatio(GearTrainElement previous) throws GearTrainNonMeshableElements {
 		//Input Gear
 		if(previous == null){
-			return 1;
+			return 1.0;
 		}
 		//Axial doesn't change ratio
 		else if(this.getAllignment() == GearAlignment.AXIAL){
-			return 1;
+			return 1.0;
 		}
 		//Planar changes ratio can only be planar to spur gears
 		else{			

@@ -17,13 +17,15 @@ public enum FieldInformationValues {
 	MAX_GEAR_SIZE("max_gear_size", "max_gear_size", Double::valueOf, GearTrain.class),
 	MIN_GEAR_SIZE("min_gear_size", "min_gear_size", Double::valueOf, GearTrain.class),
 	INPUT_SPEED("input_speed", "input_speed", Double::valueOf, GearTrain.class),
+	OUTPUT_SPEED("output_speed", "output_speed", Double::valueOf, GearTrain.class),
 	MODULUS("modulus", "modulus", Double::valueOf, SpurGear.class),
 	PITCH("pitch", "pitch", Double::valueOf, SpurGear.class, WormGear.class, Worm.class),
 	TEETH("teeth", "teeth", Integer::valueOf, SpurGear.class, WormGear.class),
 	THREAD("threads", "threads", Integer::valueOf, Worm.class),
 	ALIGNMENT("alignment", "alignment", GearAlignment::getAlignment, GearTrainElement.class),
-	UNIT_SIZE("unit_size", "unit_size", String::valueOf, GearTrainElement.class, GearTrain.class),
-	UNIT_SPEED("unit_speed", "unit_speed", String::valueOf, GearTrain.class, GearTrainElement.class);
+	UNIT_SIZE("unit_size", "unit_size", String::valueOf, GearTrain.class),
+	UNIT_SPEED("unit_speed", "unit_speed", String::valueOf, GearTrain.class),
+	NAME("name", "name", String::valueOf, GearTrain.class, GearTrainElement.class);
 	
 	
 	private String key;

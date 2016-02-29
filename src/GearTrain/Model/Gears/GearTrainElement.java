@@ -9,17 +9,14 @@ import GearTrain.Model.NewInstance;
 public abstract class GearTrainElement extends NewInstance{
 	
 	private double length, width, height;
-	private String unit_size, unit_speed;
 	private GearAlignment alignment;
-	
+	private String name;
 	/**
 	 * General Constructor for GearTrainElement, used to set up base values
 	 */
 	public GearTrainElement(){
 		//Arbitrary, Gears override these
 		this.setDimensions(10, 1, 10);
-		this.setSpeedUnits("RPM");
-		this.setDimensionUnits("mm");
 		this.setAllignment(GearAlignment.AXIAL);
 	}
 
@@ -38,15 +35,7 @@ public abstract class GearTrainElement extends NewInstance{
 		this.width = width;
 		this.height = height;
 	}
-
-	public void setDimensionUnits(String units) {
-		this.unit_size = units;
-	}
-
-	public void setSpeedUnits(String units) {
-		this.unit_speed = units;
-	}
-
+	
 	public double getLength() {
 		return this.length;
 	}
@@ -59,20 +48,17 @@ public abstract class GearTrainElement extends NewInstance{
 		return this.height;
 	}
 
-	public String getDimensionUnits() {
-		return this.unit_size;
-	}
-
-	public String getSpeedUnits() {
-		return this.unit_speed;
-	}
-
 	public GearAlignment getAllignment() {
 		return alignment;
 	}
 
 	public void setAllignment(GearAlignment allignment) {
 		this.alignment = allignment;
+	}
+	
+	public String elementToString(){
+		String retval = "Invalid Element Entered!";
+		return retval;
 	}
 	
 	/**
@@ -83,4 +69,12 @@ public abstract class GearTrainElement extends NewInstance{
 	 * 				or modulus/other meshing factors are inconsistent 
 	 */
 	public abstract double getRatio(GearTrainElement previous) throws GearTrainNonMeshableElements;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 }

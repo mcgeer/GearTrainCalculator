@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<GearTrain name="GearTrain_Test" input_speed="10" height="5" width="5" length="22" unit_speed="rpm" unit_size="mm">
-	<SpurGear name="Spur1" unit_size="mm" unit_speed="rpm" modulus="1" pitch="10" teeth = "10" alignment="axial" width="1" length="10" height="10"></SpurGear>
-	<SpurGear name="Spur2" unit_size="mm" unit_speed="rpm" modulus="1" pitch="5" teeth = "5" width="1" alignment="planar"></SpurGear>
-	<Worm name="Worm1" threads="1" alignment="axial"></Worm>
-	<WormGear name="WormGear1" teeth="50" alignment="planar"></WormGear>
+<GearTrain name="GearTrain_Test" input_speed="463.416667" height="5" width="5" length="22" unit_speed="rps" unit_size="mm">
+	<SpurGear name="Spur1" modulus="1" pitch="12" teeth = "12" alignment="axial" width="1" length="10" height="10"></SpurGear>
+	<SpurGear name="Spur2" modulus="1" pitch="23" teeth = "23" width="1" alignment="planar"></SpurGear>
+	<SpurGear name="Spur3" modulus="1" pitch="12" teeth = "12" alignment="axial" width="1" length="10" height="10"></SpurGear>
+	<SpurGear name="Spur4" modulus="1" pitch="29" teeth = "29" width="1" alignment="planar"></SpurGear>
 </GearTrain>

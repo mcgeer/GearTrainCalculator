@@ -1,6 +1,11 @@
 -Set all default constructors
 -JavaDocs Functions
--Worm and Worm Gear
-	-Modify FieldInformation as well as GearTrainElementTags
--UI, set up UI to allow for New GearTrain as well as load Old (XML)
-	-Implement save
+-UI, set up UI to allow for New GearTrain
+	-Implement save, save as - XML writer
+-When New is clicked, refresh controller, view, and point model to null initialized
+-Display GearTrain elements to user
+-Develop help menu, and other menus, possibly add an about
+-Add Optimizers and impliment current code that Thomas worked on as calculate function
+
+
+-Gear Train Title as GearTrain name

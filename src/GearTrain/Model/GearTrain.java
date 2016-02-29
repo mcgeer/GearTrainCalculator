@@ -1,4 +1,5 @@
 package GearTrain.Model;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +10,7 @@ import GearTrain.Model.Gears.GearTrainElement;
 //Model for a given GearTrain
 public class GearTrain extends NewInstance {
 	private List<GearTrainElement> gear_train = new ArrayList<>();
-	private double input_speed = 0;
+	private double input_speed = 0, output_speed = Double.NaN;
 	private double height, length, width, min_gear_size, max_gear_size;
 	private String unit_size, unit_speed, name;
 	
@@ -45,14 +46,15 @@ public class GearTrain extends NewInstance {
 	 * @return output speed of gear train
 	 * @throws GearTrainNonMeshableElements, 2 elements were found not feasible to mesh
 	 */
-	public double getOutputSpeed() throws GearTrainNonMeshableElements{
+	public double calculateOutputSpeed() throws GearTrainNonMeshableElements{
 		double ratio = 1;
 		GearTrainElement p = null;
 		for(GearTrainElement g : gear_train){
 			ratio *= g.getRatio(p);
 			p = g;
 		}
-		return ratio * getInputSpeed();
+		output_speed = ratio * getInputSpeed();
+		return output_speed;
 	}
 	
 	public boolean checkIsInBounds(){
@@ -64,6 +66,14 @@ public class GearTrain extends NewInstance {
 		//TODO generate Train validation based on bound checks, meshing gears, gear sizes
 		return true;
 	}
+	@Override
+	public String elementToString() {
+		Field[] f = getClass().getDeclaredFields();
+		for(Field field : f){
+			if(field.getType().getTypeName().equals(double.class.getTypeName()));
+		}
+		return "";
+	}
 	
 	//-----------------------------Getters and Setters-----------------------------//
 	
@@ -71,6 +81,9 @@ public class GearTrain extends NewInstance {
 		return input_speed;
 	}
 
+	public double getOutputSpeed() {
+		return output_speed;
+	}
 	public void setInputSpeed(double input_speed) {
 		this.input_speed = input_speed;
 	}

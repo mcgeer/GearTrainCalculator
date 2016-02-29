@@ -15,8 +15,6 @@ public class SpurGear extends GearTrainElement{
 			GearAlignment alignment){
 		
 		//setDimensions(length, width, height);
-		setSpeedUnits(speed_units);
-		setDimensionUnits(dimension_units);
 		
 		setAllignment(alignment);
 		
@@ -56,7 +54,7 @@ public class SpurGear extends GearTrainElement{
 			if(previous instanceof SpurGear){
 				//ratio = TeethA/TeethB if b is smaller speed increases
 				if(((SpurGear) previous).getModulus() == this.getModulus())
-					return ((SpurGear) previous).getGearTeeth() / this.getGearTeeth();
+					return (double)((SpurGear) previous).getGearTeeth() / (double)this.getGearTeeth();
 				else
 					throw new GearTrainNonMeshableElements("Elements do not mesh in gear train. Modulus dissagreement.");
 			}

@@ -2,6 +2,9 @@ package GearTrain.Controller;
 
 import org.eclipse.swt.widgets.Shell;
 import java.lang.reflect.Field;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -16,8 +19,8 @@ import GearTrain.Model.Parser.XMLParser;
 import GearTrain.View.View;
 
 public class GearTrainController {
-	private View view;
-	private GearTrain gear_train_model;
+	private static View view;
+	private static GearTrain gear_train_model;
 	private Shell parentShell;
 	private Display display;
 	Field f;
@@ -42,18 +45,15 @@ public class GearTrainController {
 		}
 
 	}
-
+	
+	/**
+	 * This function keeps the view open until the display is disposed.
+	 */
 	public void Run() {
 		while (!parentShell.isDisposed()) {
 			if (!display.readAndDispatch()) {
 				display.sleep();
 			}
-		}
-		try {
-			if (this.gear_train_model != null)
-				System.out.println(gear_train_model.getOutputSpeed());
-		} catch (GearTrainNonMeshableElements e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -63,6 +63,7 @@ public class GearTrainController {
 		view.getButtonCalculateOptimalTrain().addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
+				view.refreshView();
 				System.out.println("Event: Button-> Calculate Optimal Gear Train");
 			}
 		});
@@ -70,7 +71,14 @@ public class GearTrainController {
 		view.getButtonCalculate().addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent arg0) {
-				System.out.println("Event: Button-> Calculate");
+				try {
+					Double outSpeed = gear_train_model.calculateOutputSpeed();
+					view.getConsole().addToConsol("Output Speed of Gear Train is: " + outSpeed + gear_train_model.getUnitSpeed());
+					ModelTextFieldLink.OUTPUT_SPEED.getStateAndSetText();
+				} catch (GearTrainNonMeshableElements e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
 		
@@ -78,16 +86,17 @@ public class GearTrainController {
 		view.getMenuFileItemNew().addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
 				System.out.println("Event: File-> New Selected");
-
 			}
 		});
 
 		view.getMenuFileItemOpen().addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event e) {
-				System.out.println("Event: File-> Open Selected");
 				String file = view.openFileBrowserForOpen();
-				// TODO test if valid file!
 				setGearTrainModel(XMLParser.loadGearTrain(file));
+				if(gear_train_model != null){
+					drawModelToView();
+				}
+				view.getConsole().addToConsol("Opened Gear Train: " +   gear_train_model.getName());
 			}
 		});
 
@@ -129,6 +138,19 @@ public class GearTrainController {
 	}
 
 	// ====================================Setters====================================//
+	
+	/**
+	 * Draws All elements and attributes in the gear train to the View
+	 */
+	private void drawModelToView(){
+		for(ModelTextFieldLink m : ModelTextFieldLink.values()){
+			m.getStateAndSetText();
+		}
+		//TODO
+		//Add something For Worm Drives
+		//Add gear Train Elements here
+	}
+	
 	public void setView(View view) {
 		this.view = view;
 	}
@@ -136,4 +158,33 @@ public class GearTrainController {
 	public void setGearTrainModel(GearTrain gear_train_model) {
 		this.gear_train_model = gear_train_model;
 	}
+	
+	/**
+	 * Links all Text field setters to corresponding GearTrain getters
+	 */
+	private enum ModelTextFieldLink {
+		INPUT_SPEED			(gear_train_model::getInputSpeed, view::setInputSpeedText, String::valueOf),
+		OUTPUT_SPEED		(gear_train_model::getOutputSpeed, view::setOutputSpeedText, String::valueOf),
+		GEAR_BOX_DIMENSION_X(gear_train_model::getGearBoxLength, view::setBoxDimensionXText, String::valueOf),
+		GEAR_BOX_DIMENSION_Y(gear_train_model::getGearBoxWidth, view::setBoxDimensionYText, String::valueOf),
+		GEAR_BOX_DIMENSION_Z(gear_train_model::getGearBoxHeight, view::setBoxDimensionZText, String::valueOf),
+		MAX_GEAR_SIZE		(gear_train_model::getMaxGearSize, view::setMaxGearSizeText, String::valueOf),
+		MIN_GEAR_SIZE		(gear_train_model::getMin_gear_size, view::setMinGearSizeText, String::valueOf),
+		GEAR_TRAIN_NAME		(gear_train_model::getName, view::setGearTrainName, String::valueOf);
+		
+		private Supplier<?> getter;
+		private Consumer<String> setter;
+		private Function<Object, String> castFunction; 
+		
+		private ModelTextFieldLink(Supplier<?> getter, Consumer<String> setter, Function<Object, String> castFunction){
+			this.getter = getter;
+			this.setter = setter;
+			this.castFunction = castFunction;
+		}
+		
+		public void getStateAndSetText(){
+			setter.accept(castFunction.apply(getter.get()));
+		}
+	}
+	
 }
